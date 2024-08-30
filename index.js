@@ -4,11 +4,13 @@ import { notFound } from './middleware/notFound.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import productRoute from './routes/product.route.js';
 import connectDB from './db/connect.db.js';
+import cors from 'cors';
 configDotenv();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(cors("*"));
 app.use(express.json());
 // routes
 app.use('/api/v1/clothes/', productRoute);
