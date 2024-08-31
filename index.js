@@ -9,9 +9,13 @@ configDotenv();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const origin = ['https://clothingstore-beta.vercel.app/', 'http://localhost:5173/']
+const corsOptions = {
+    origin: ['https://clothingstore-beta.vercel.app', 'http://localhost:5173'],
+    methods: ['GET', 'POST'], 
+    allowedHeaders: ['Content-Type', 'Authorization'],
+}
 
-app.use(cors({ origin }));
+app.use(cors(corsOptions));
 app.use(express.json());
 // routes
 app.use('/api/v1/clothes/', productRoute);
