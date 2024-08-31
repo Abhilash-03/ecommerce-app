@@ -13,10 +13,12 @@ const state = reactive({
 })
 const searchText = ref('');
 
+const URL = 'https://clothstore-api.vercel.app';
+
  const handleInputChange = computed(async() => {
     if(searchText.value.length > 3){
       try {
-        const response = await axios.get(`/api/v1/clothes/search?searchTerm=${searchText.value}`);
+        const response = await axios.get(`${URL}/api/v1/clothes/search?searchTerm=${searchText.value}`);
         state.searchProduct = response.data.searchProduct;
       } catch (error) {
         console.error('Error fetching products:', error);

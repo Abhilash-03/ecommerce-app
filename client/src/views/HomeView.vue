@@ -8,10 +8,10 @@ const state = reactive({
   productlists: [],
   isLoading: true
 })
-
+const URL = 'https://clothstore-api.vercel.app';
 onMounted(async() => {
   try {
-    const response = await axios.get('/api/v1/clothes/product');
+    const response = await axios.get(`${URL}/api/v1/clothes/product`);
     state.productlists = response.data.products;
   } catch (error) {
     console.error('Error fetching product list', error);
