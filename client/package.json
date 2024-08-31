@@ -12,6 +12,7 @@
     "axios": "^1.7.5",
     "flowbite": "^2.5.1",
     "vue": "^3.4.29",
+    "vue-debounce": "^5.0.0",
     "vue-router": "^4.3.3"
   },
   "devDependencies": {

@@ -3,6 +3,9 @@ import { RouterView } from 'vue-router';
 import Navbar from './components/Navbar.vue';
 import axios from 'axios';
 import { computed, reactive, ref } from 'vue';
+import vueDebounce from 'vue-debounce';
+
+const vDebounce = vueDebounce({ lock: true})
 
 const state = reactive({
     searchProduct: [],
@@ -13,7 +16,7 @@ const searchText = ref('');
  const handleInputChange = computed(async() => {
     if(searchText.value.length > 3){
       try {
-        const response = await axios.get(`http://localhost:3000/api/v1/clothes/search?searchTerm=${searchText.value}`);
+        const response = await axios.get(`/api/v1/clothes/search?searchTerm=${searchText.value}`);
         state.searchProduct = response.data.searchProduct;
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -24,7 +27,7 @@ const searchText = ref('');
     } else {
         state.searchProduct = [];
     }
-    console.log("Searching....=>", state.searchProduct);
+    // console.log("Searching....=>", state.searchProduct);
  })
 
 </script>
@@ -41,7 +44,7 @@ const searchText = ref('');
         <span class="sr-only">Search icon</span>
       </div>
       <RouterLink to="/search">
-      <input v-model="searchText" class="block w-full h-14 p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search..." @input="handleInputChange">
+      <input v-debounce:4000="handleInputChange" v-model="searchText" class="block w-full h-14 p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search..." >
     </RouterLink>
     </div>
 
