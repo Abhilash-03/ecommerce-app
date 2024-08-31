@@ -1,12 +1,16 @@
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, ref } from 'vue';
 
 const props = defineProps({
     items: Object
 })
+const fullDescpt = ref(false);
+const showMoreOrLess = () => {
+        fullDescpt.value = !fullDescpt.value
+}
 </script>
 <template>
-<div class="w-full max-w-md bg-gray-800 hover:bg-gray-700 shadow-inner text-gray-300  overflow-hidden">
+<div class="w-full max-w-md bg-gray-800 hover:bg-gray-700 shadow-inner text-gray-300 overflow-hidden">
     <a href="#">
         <img class="p-8 hover:scale-110 transition-all duration-300 h-[400px] rounded-xl w-full" :src="items.image" :alt="items.productName" />
     </a>
@@ -24,7 +28,9 @@ const props = defineProps({
         </div>
         <div class="border-y-2 my-3 p-2">
             <h4 class="text-white font-semibold">Product Details:</h4>
-            <span>{{ items.productDescription }}</span>
+            <span v-if="!fullDescpt" @click="showMoreOrLess">{{ items.productDescription.slice(0, 101) }}... <span class="text-blue-400 cursor-pointer">{{ fullDescpt ? 'less': 'more' }}</span></span>
+            <span v-else @click="showMoreOrLess">{{ items.productDescription }} <span class="text-blue-400 cursor-pointer">{{ fullDescpt ? 'less': 'more' }}</span></span>
+          
         </div>
         <div class="flex items-center justify-between">
             <span class="text-2xl font-bold text-white">₹{{ items.price }}</span>
