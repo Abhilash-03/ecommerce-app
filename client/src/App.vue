@@ -2,10 +2,9 @@
 import { RouterView } from 'vue-router';
 import Navbar from './components/Navbar.vue';
 import axios from 'axios';
-import { computed, reactive, ref } from 'vue';
+import { reactive, ref } from 'vue';
 import vueDebounce from 'vue-debounce';
-
-const vDebounce = vueDebounce({ lock: true})
+const vDebounce = vueDebounce({ lock: true })
 
 const state = reactive({
     searchProduct: [],
@@ -15,7 +14,7 @@ const searchText = ref('');
 
 const URL = 'https://clothstore-api.vercel.app';
 
- const handleInputChange = computed(async() => {
+ const handleInputChange = async() => {
     if(searchText.value.length > 3){
       try {
         const response = await axios.get(`${URL}/api/v1/clothes/search?searchTerm=${searchText.value}`);
@@ -30,7 +29,7 @@ const URL = 'https://clothstore-api.vercel.app';
         state.searchProduct = [];
     }
     // console.log("Searching....=>", state.searchProduct);
- })
+ }
 
 </script>
 
@@ -43,10 +42,9 @@ const URL = 'https://clothstore-api.vercel.app';
         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
         </svg>
-        <span class="sr-only">Search icon</span>
       </div>
       <RouterLink to="/search">
-      <input v-debounce:4000="handleInputChange" v-model="searchText" class="block w-full h-14 p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search..." >
+      <input v-model="searchText" class="block w-full h-14 p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search..." v-debounce:400ms="handleInputChange">
     </RouterLink>
     </div>
 
